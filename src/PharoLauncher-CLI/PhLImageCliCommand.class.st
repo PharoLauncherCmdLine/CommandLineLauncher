@@ -36,7 +36,17 @@ PhLImageCliCommand >> execute [
 
 { #category : #accessing }
 PhLImageCliCommand >> findImage [
-	^ self imageRepository imageNamed: self imageName asLowercase
+	^ self findImage: self imageName  
+]
+
+{ #category : #accessing }
+PhLImageCliCommand >> findImage: anImageName [
+	^ [ self imageRepository imageNamed: anImageName asLowercase ]
+		on: NotFound
+		do: [ (anImageName asFileReference exists
+				and: [ anImageName asFileReference isFile ])
+				ifFalse: [ NotFound signal: 'blipblop' ].
+				PhLImage location: anImageName asFileReference ]
 ]
 
 { #category : #accessing }

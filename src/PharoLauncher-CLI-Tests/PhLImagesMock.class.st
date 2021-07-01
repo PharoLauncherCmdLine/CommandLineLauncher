@@ -8,10 +8,18 @@ Class {
 		'images',
 		'name',
 		'isLaunched',
-		'script'
+		'script',
+		'location'
 	],
 	#category : #'PharoLauncher-CLI-Tests'
 }
+
+{ #category : #'instance creation' }
+PhLImagesMock class >> location: aFileReference [
+	^ PhLImagesMock new
+		setLocation: aFileReference;
+		yourself
+]
 
 { #category : #accessing }
 PhLImagesMock class >> name: aString [
@@ -97,6 +105,11 @@ PhLImagesMock >> originTemplateUrl [
 { #category : #accessing }
 PhLImagesMock >> pharoVersionFromFile [
 	^ 'Pharo 8'
+]
+
+{ #category : #initialization }
+PhLImagesMock >> setLocation: aFileReference [ 
+	location := aFileReference.
 ]
 
 { #category : #mocking }
