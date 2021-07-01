@@ -35,6 +35,8 @@ PhLImageDeleteCliCommand class >> launcherCmdPositionals [
 ]
 
 { #category : #accessing }
-PhLImageDeleteCliCommand >> executeWithImage: anImage [
-	self imageRepository deleteImage: anImage
+PhLImageDeleteCliCommand >> execute [
+	[ self imageRepository deleteImage: self findImagePathNonAccepted ]
+		on: NotFound
+		do: [ ^ self logImageNotFoundMessage ]
 ]

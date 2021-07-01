@@ -50,6 +50,11 @@ PhLImageCliCommand >> findImage: anImageName [
 ]
 
 { #category : #accessing }
+PhLImageCliCommand >> findImagePathNonAccepted [
+	^ self imageRepository imageNamed: self imageName asLowercase
+]
+
+{ #category : #accessing }
 PhLImageCliCommand >> imageName [
 	^ (arguments at: #existingImageName)
 		value: self;
