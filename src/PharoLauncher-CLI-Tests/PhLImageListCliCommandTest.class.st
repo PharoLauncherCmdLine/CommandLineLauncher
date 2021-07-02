@@ -24,3 +24,19 @@ PhLImageListCliCommandTest >> testListImageShouldSucceed [
 	self assert: (self outputString includesSubstring:'myImage1').
 	self assert: (self outputString includesSubstring:'myImage2')
 ]
+
+{ #category : #tests }
+PhLImageListCliCommandTest >> testListImageWithImageNameShouldSucceed [
+	self addImageNamed: 'myImage1'.
+	self addImageNamed: 'myImage2'.
+	self addImageNamed: 'mustNotBeList'.
+	self addImageNamed: 'myImage3'.
+	
+	self runCommand: #('launcher' 'image' 'list' '--name' 'myImage').
+	 
+	self assertSuccess.  
+	self assert: (self outputString includesSubstring:'myImage1').
+	self assert: (self outputString includesSubstring:'myImage2').
+	self assert: (self outputString includesSubstring:'myImage3').
+	self deny: (self outputString includesSubstring: 'mustNotBeList')
+]
