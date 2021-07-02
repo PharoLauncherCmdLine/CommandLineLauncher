@@ -352,7 +352,7 @@ PhLImage >> launchConfigurations: aCollection [
 
 { #category : #action }
 PhLImage >> launchWithConfiguration: aPhLLaunchConfiguration [
-	| architectureWarningEnabled continue |
+	| architectureWarningEnabled continue outStream |
 	
 	self canBeLaunched
 		ifFalse: [ PhLArchitectureError signalImage: self. ^ self ].
@@ -370,7 +370,11 @@ PhLImage >> launchWithConfiguration: aPhLLaunchConfiguration [
 			(PhLLaunchImageCommand warnOnArchMismatch and: [ architectureWarningEnabled  ])
 				ifTrue: [ 
 					architectureWarningEnabled := false. "only raise one warning"
-					continue := YesNoDialogWithTickBoxWindow confirm: warning longDescription label: warning name. ].
+					continue := true.
+					outStream := PhLNotificationCenter default.
+					outStream errorStream nextPutAll:'Architecture mismatch, still running image if possible';
+					newLine.
+					].
 			continue ifTrue: [ warning resume ]. ]
 ]
 
