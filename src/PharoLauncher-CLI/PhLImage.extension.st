@@ -2,5 +2,5 @@ Extension { #name : #PhLImage }
 
 { #category : #'*PharoLauncher-CLI' }
 PhLImage >> cliPrintString [
-	^ self name
+	^ self name,'    architecture: ', self architecture.
 ]

@@ -22,5 +22,6 @@ PhLImageListCliCommandTest >> testListImageShouldSucceed [
 	 
 	self assertSuccess.  
 	self assert: (self outputString includesSubstring:'myImage1').
-	self assert: (self outputString includesSubstring:'myImage2')
+	self assert: (self outputString includesSubstring:'myImage2').
+	self assert: (self outputString includesSubstring:'architecture: 64').
 ]
