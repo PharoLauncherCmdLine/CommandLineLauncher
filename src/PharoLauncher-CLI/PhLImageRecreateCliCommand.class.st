@@ -1,3 +1,6 @@
+"
+Command to reset an image 
+"
 Class {
 	#name : #PhLImageRecreateCliCommand,
 	#superclass : #PhLImageCliCommand,
@@ -25,6 +28,6 @@ PhLImageRecreateCliCommand class >> launcherCmdPositionals [
 ]
 
 { #category : #'command execution' }
-PhLImageRecreateCliCommand >> execute [
+PhLImageRecreateCliCommand >> executeWithImage: anImage [ 
 	self imageRepository recreateImage: self imageName
 ]

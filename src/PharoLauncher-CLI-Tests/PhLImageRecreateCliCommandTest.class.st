@@ -8,10 +8,10 @@ Class {
 PhLImageRecreateCliCommandTest >> testCanRecreateAnImageInCommandLine [
 	| image |
 	image := self addImageNamed: 'myImage1'.
-	image modification. 
+	image modification: true. 
 	
 	self runCommand: #('launcher' 'image' 'recreate' 'myImage1').
 	 
 	self assertSuccess.  
-	self assert: image isModified 
+	self deny: image isModified 
 ]

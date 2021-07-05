@@ -82,8 +82,8 @@ PhLImagesMock >> location [
 ]
 
 { #category : #mock }
-PhLImagesMock >> modification [
-	isModified := true
+PhLImagesMock >> modification: aBoolean [
+	isModified := aBoolean
 ]
 
 { #category : #accessing }
