@@ -64,3 +64,8 @@ PhLImagesMockRepo >> initialize [
 	super initialize.
 	images := OrderedCollection new
 ]
+
+{ #category : #testing }
+PhLImagesMockRepo >> recreateImage: aString [ 
+	self initialize 
+]
