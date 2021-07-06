@@ -41,17 +41,27 @@ PhLImageCliCommand >> findImage [
 
 { #category : #accessing }
 PhLImageCliCommand >> findImage: anImageName [
-	^ [ self imageRepository imageNamed: anImageName asLowercase ]
+	^ [ self findInDirectory: anImageName ]
 		on: NotFound
-		do: [ (anImageName asFileReference exists
-				and: [ anImageName asFileReference isFile ])
-				ifFalse: [ NotFound signal: 'blipblop' ].
-				PhLImage location: anImageName asFileReference ]
+		do: [ self findOnFileSystem: anImageName ]
 ]
 
 { #category : #accessing }
 PhLImageCliCommand >> findImagePathNonAccepted [
 	^ self imageRepository imageNamed: self imageName asLowercase
+]
+
+{ #category : #'finding/searching' }
+PhLImageCliCommand >> findInDirectory: anImageName [
+	^ self imageRepository imageNamed: anImageName asLowercase
+]
+
+{ #category : #'find-select' }
+PhLImageCliCommand >> findOnFileSystem: anImageName [
+	(anImageName asFileReference exists
+		and: [ anImageName asFileReference isFile ])
+		ifFalse: [ NotFound signal: 'image is not existing' ].
+	^ PhLImage location: anImageName asFileReference
 ]
 
 { #category : #accessing }

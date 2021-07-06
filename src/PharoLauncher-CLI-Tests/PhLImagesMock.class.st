@@ -26,6 +26,11 @@ PhLImagesMock class >> name: aString [
    ^self new name: aString.
 ]
 
+{ #category : #mocks }
+PhLImagesMock >> architecture [
+	^ '64'
+]
+
 { #category : #printing }
 PhLImagesMock >> cliPrintString [
 	^ self name
