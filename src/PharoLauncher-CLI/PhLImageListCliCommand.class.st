@@ -28,13 +28,13 @@ PhLImageListCliCommand class >> launcherCmdDescription [
 PhLImageListCliCommand class >> launcherCmdFlags [
 	^ {(ClapFlag id: #name)
 			description: 'Allows to list images including a substring ';
-			meaning: [ :arg :app | 
+			meaning: [ :arg :app | "this argument is optional "
 				(arg at: #nameAsString) word ];
 			implicitMeaning: [ :arg :app |  ];
 			add: ((ClapPositional id: #nameAsString)
 					description: 'the substring to search through the images';
 					meaning: [ :pos | pos word asSymbol ];
-					implicitMeaning: [ :arg :app | ^ app ])}
+					implicitMeaning: [ :arg :app | ])}
 ]
 
 { #category : #'instance creation' }
