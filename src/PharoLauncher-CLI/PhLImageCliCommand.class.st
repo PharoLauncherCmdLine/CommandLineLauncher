@@ -55,7 +55,7 @@ PhLImageCliCommand >> findInDirectory: anImageName [
 PhLImageCliCommand >> findOnFileSystem: anImageName [
 	(anImageName asFileReference exists
 		and: [ anImageName asFileReference isFile ])
-		ifFalse: [ NotFound signal: 'image is not existing' ].
+		ifFalse: [ NotFound signal: self logImageNotFoundMessage  ].
 	^ PhLImage location: anImageName asFileReference
 ]
 
