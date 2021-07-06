@@ -11,7 +11,7 @@ PhLImageLaunchCliCommandTest >> testLaunchImageFromDiskShouldRaiseNotFound [
 	memoryFileSystem := FileSystem memory.
 	DiskStore
 		currentFileSystem: memoryFileSystem
-		during: [ location := (memoryFileSystem root / 'bla.image') ensureCreateFile.
+		during: [ location := (memoryFileSystem root / 'non-existing.image') ensureCreateFile.
 			self should: [ command findImage: '/wrong/path' ] raise: NotFound ]
 ]
 
@@ -23,7 +23,7 @@ PhLImageLaunchCliCommandTest >> testLaunchImageFromDiskShouldSucceed [
 	DiskStore
 		currentFileSystem: memoryFileSystem
 		during: [ 
-			location := (memoryFileSystem root / 'bla.image') ensureCreateFile.
+			location := (memoryFileSystem root / 'existing.image') ensureCreateFile.
 			self
 				shouldnt: [ command findImage: location fullName ]
 				raise: NotFound ]
