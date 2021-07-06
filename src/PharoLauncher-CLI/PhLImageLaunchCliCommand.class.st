@@ -66,11 +66,13 @@ PhLImageLaunchCliCommand >> checkScriptValidity: aScriptPath [
 { #category : #accessing }
 PhLImageLaunchCliCommand >> executeWithImage: anImage [
 	| script |
-	self outStream nextPutAll: 'Launching image';
-	newLine.
+	self outStream
+		nextPutAll: 'Launching image';
+		newLine.
 	script := self script.
 	self isUsingScript
-		ifTrue: [ (self checkScriptValidity: script) ifFalse: [ ^ self ].
+		ifTrue: [ (self checkScriptValidity: script)
+				ifFalse: [ ^ self ].
 			anImage
 				shouldRunInitializationScript: true;
 				initializationScript: script asFileReference ].
