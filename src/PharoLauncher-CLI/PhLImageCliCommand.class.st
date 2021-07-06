@@ -39,6 +39,14 @@ PhLImageCliCommand >> execute [
 		do: [ ^ self logImageNotFoundMessage ]
 ]
 
+{ #category : #'find-select' }
+PhLImageCliCommand >> findByPath: anImageName [
+	(anImageName asFileReference exists
+		and: [ anImageName asFileReference isFile ])
+		ifFalse: [ NotFound signal: self class imageNotFoundMessage ].
+	^ PhLImage location: anImageName asFileReference
+]
+
 { #category : #accessing }
 PhLImageCliCommand >> findImage [
 	^ self findImage: self imageName  
@@ -46,22 +54,14 @@ PhLImageCliCommand >> findImage [
 
 { #category : #accessing }
 PhLImageCliCommand >> findImage: anImageName [
-	^ [ self findInDirectory: anImageName ]
+	^ [ self findInRepository: anImageName ]
 		on: NotFound
-		do: [ self findOnFileSystem: anImageName ]
+		do: [ self findByPath: anImageName ]
 ]
 
 { #category : #'finding/searching' }
-PhLImageCliCommand >> findInDirectory: anImageName [
+PhLImageCliCommand >> findInRepository: anImageName [
 	^ self imageRepository imageNamed: anImageName asLowercase
-]
-
-{ #category : #'find-select' }
-PhLImageCliCommand >> findOnFileSystem: anImageName [
-	(anImageName asFileReference exists
-		and: [ anImageName asFileReference isFile ])
-		ifFalse: [ NotFound signal: self class imageNotFoundMessage ].
-	^ PhLImage location: anImageName asFileReference
 ]
 
 { #category : #accessing }
