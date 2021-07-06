@@ -44,22 +44,15 @@ PhLImageListCliCommand >> execute [
 
 { #category : #listing }
 PhLImageListCliCommand >> imagesFromName: aSubtring [
-	| counter |
-	counter := 1.
-	self imageRepository images
-		do: [ :anItem | 
-			(anItem name includesSubstring: aSubtring)
-				ifTrue: [ self outStream
-						nextPutAll: counter asString;
-						nextPutAll: ': ';
-						nextPutAll: anItem cliPrintString;
-						newLine.
-					counter := counter + 1 ] ]
+	| imagesIncludingSubstring |
+	imagesIncludingSubstring := self imageRepository images
+		select: [ :anImage | anImage name includesSubstring: aSubtring ].
+	^ imagesIncludingSubstring
 ]
 
 { #category : #'instance creation' }
 PhLImageListCliCommand >> listImages [
-	self name ifNotNil:[ ^ self imagesFromName: self name].
+	self name ifNotNil:[ ^ self list: (self imagesFromName: self name)].
 	self list: self imageRepository images
 ]
 
