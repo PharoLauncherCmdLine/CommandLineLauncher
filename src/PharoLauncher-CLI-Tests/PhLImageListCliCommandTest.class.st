@@ -29,7 +29,7 @@ PhLImageListCliCommandTest >> testListImageShouldSucceed [
 PhLImageListCliCommandTest >> testListImageWithImageNameShouldSucceed [
 	self addImageNamed: 'myImage1'.
 	self addImageNamed: 'myImage2'.
-	self addImageNamed: 'mustNotBeList'.
+	self addImageNamed: 'shouldNotBeListed'.
 	self addImageNamed: 'myImage3'.
 	
 	self runCommand: #('launcher' 'image' 'list' '--name' 'myImage').
