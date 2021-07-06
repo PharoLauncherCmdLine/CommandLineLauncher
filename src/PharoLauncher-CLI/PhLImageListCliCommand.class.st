@@ -52,8 +52,11 @@ PhLImageListCliCommand >> imagesFromName: aSubtring [
 
 { #category : #'instance creation' }
 PhLImageListCliCommand >> listImages [
-	self name ifNotNil:[ ^ self list: (self imagesFromName: self name)].
-	self list: self imageRepository images
+	| images |
+	images := self name 
+		ifNil: [  self imageRepository images ]
+		ifNotNil:[ self imagesFromName: self name ].
+	self list: images.
 ]
 
 { #category : #'instance creation' }
