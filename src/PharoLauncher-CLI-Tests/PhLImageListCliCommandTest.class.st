@@ -38,5 +38,5 @@ PhLImageListCliCommandTest >> testListImageWithImageNameShouldSucceed [
 	self assert: (self outputString includesSubstring:'myImage1').
 	self assert: (self outputString includesSubstring:'myImage2').
 	self assert: (self outputString includesSubstring:'myImage3').
-	self deny: (self outputString includesSubstring: 'mustNotBeList')
+	self deny: (self outputString includesSubstring: 'shouldNotBeListed')
 ]
