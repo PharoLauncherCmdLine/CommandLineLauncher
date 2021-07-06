@@ -76,6 +76,10 @@ PhLImageLaunchCliCommand >> executeWithImage: anImage [
 			anImage
 				shouldRunInitializationScript: true;
 				initializationScript: script asFileReference ].
+	[anImage vmManager checkImageArchitecture] on:PhLArchitectureMismatchWarning do:[ self errorStream
+						nextPutAll: 'Architecture mismatch, still running image if possible';
+						newLine].
+	PhLLaunchImageCommand warnOnArchMismatch: false.
 	anImage launch
 ]
 
