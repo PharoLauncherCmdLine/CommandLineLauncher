@@ -46,11 +46,6 @@ PhLImageCliCommand >> findImage: anImageName [
 		do: [ self findOnFileSystem: anImageName ]
 ]
 
-{ #category : #accessing }
-PhLImageCliCommand >> findImagePathNonAccepted [
-	^ self imageRepository imageNamed: self imageName asLowercase
-]
-
 { #category : #'finding/searching' }
 PhLImageCliCommand >> findInDirectory: anImageName [
 	^ self imageRepository imageNamed: anImageName asLowercase
