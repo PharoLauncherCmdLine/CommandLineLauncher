@@ -31,6 +31,11 @@ PhLImagesMock >> architecture [
 	^ '64'
 ]
 
+{ #category : #mockup }
+PhLImagesMock >> checkImageArchitecture [
+	^self 
+]
+
 { #category : #printing }
 PhLImagesMock >> cliPrintString [
 	^ self name
@@ -120,4 +125,9 @@ PhLImagesMock >> setLocation: aFileReference [
 { #category : #mocking }
 PhLImagesMock >> shouldRunInitializationScript: aTrue [ 
 	^ self 
+]
+
+{ #category : #'mocking world' }
+PhLImagesMock >> vmManager [
+	^self 
 ]
