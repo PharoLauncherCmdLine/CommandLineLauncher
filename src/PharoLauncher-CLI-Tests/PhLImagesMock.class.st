@@ -9,19 +9,31 @@ Class {
 		'name',
 		'isLaunched',
 		'script',
-		'isModified'
+		'location'
 	],
 	#category : #'PharoLauncher-CLI-Tests'
 }
+
+{ #category : #'instance creation' }
+PhLImagesMock class >> location: aFileReference [
+	^ PhLImagesMock new
+		setLocation: aFileReference;
+		yourself
+]
 
 { #category : #accessing }
 PhLImagesMock class >> name: aString [
    ^self new name: aString.
 ]
 
-{ #category : #accessing }
+{ #category : #mocks }
 PhLImagesMock >> architecture [
-	^'64'
+	^ '64'
+]
+
+{ #category : #mockup }
+PhLImagesMock >> checkImageArchitecture [
+	^self 
 ]
 
 { #category : #printing }
@@ -116,7 +128,17 @@ PhLImagesMock >> pharoVersionFromFile [
 	^ 'Pharo 8'
 ]
 
+{ #category : #initialization }
+PhLImagesMock >> setLocation: aFileReference [ 
+	location := aFileReference.
+]
+
 { #category : #mocking }
 PhLImagesMock >> shouldRunInitializationScript: aTrue [ 
 	^ self 
+]
+
+{ #category : #'mocking world' }
+PhLImagesMock >> vmManager [
+	^self 
 ]
