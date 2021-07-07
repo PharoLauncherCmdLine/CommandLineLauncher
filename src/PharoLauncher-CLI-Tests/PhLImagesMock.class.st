@@ -9,7 +9,8 @@ Class {
 		'name',
 		'isLaunched',
 		'script',
-		'location'
+		'location',
+		'isModified'
 	],
 	#category : #'PharoLauncher-CLI-Tests'
 }
@@ -78,9 +79,14 @@ PhLImagesMock >> isLaunched [
 	^ isLaunched
 ]
 
-{ #category : #mock }
+{ #category : #setter }
 PhLImagesMock >> isModified [
 	^ isModified
+]
+
+{ #category : #setter }
+PhLImagesMock >> isModified: aBoolean [
+	isModified := aBoolean
 ]
 
 { #category : #accessing }
@@ -96,11 +102,6 @@ PhLImagesMock >> launch [
 { #category : #accessing }
 PhLImagesMock >> location [
 	^ 'my current location'
-]
-
-{ #category : #mock }
-PhLImagesMock >> modification: aBoolean [
-	isModified := aBoolean
 ]
 
 { #category : #accessing }

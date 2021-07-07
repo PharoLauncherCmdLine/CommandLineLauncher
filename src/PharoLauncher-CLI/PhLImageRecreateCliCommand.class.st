@@ -29,5 +29,5 @@ PhLImageRecreateCliCommand class >> launcherCmdPositionals [
 
 { #category : #'command execution' }
 PhLImageRecreateCliCommand >> executeWithImage: anImage [ 
-	self imageRepository recreateImage: self imageName
+	self imageRepository recreateImage: anImage
 ]

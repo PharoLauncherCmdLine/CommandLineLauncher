@@ -66,8 +66,6 @@ PhLImagesMockRepo >> initialize [
 ]
 
 { #category : #testing }
-PhLImagesMockRepo >> recreateImage: aString [ 
-	| myImage |
-	myImage := self images detect:[:anImage | anImage name = aString ].
-	myImage modification: false.
+PhLImagesMockRepo >> recreateImage: aString [
+	aString isModified: false
 ]
