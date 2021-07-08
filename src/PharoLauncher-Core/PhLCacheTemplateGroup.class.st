@@ -22,9 +22,11 @@ PhLCacheTemplateGroup class >> group: aTemplateGroup [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-PhLCacheTemplateGroup >> cliPrintString [
-	^ self name 
+{ #category : #printing }
+PhLCacheTemplateGroup >> cliPrintOn: aStream [
+	aStream
+		nextPutAll: self name;
+		newLine
 ]
 
 { #category : #comparing }

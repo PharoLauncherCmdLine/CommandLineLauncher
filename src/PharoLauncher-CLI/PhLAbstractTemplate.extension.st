@@ -1,6 +1,7 @@
 Extension { #name : #PhLAbstractTemplate }
 
 { #category : #'*PharoLauncher-CLI' }
-PhLAbstractTemplate >> cliPrintString [
-	^ self name
+PhLAbstractTemplate >> cliPrintOn: aStream [
+	aStream nextPutAll: self name;
+	newLine.
 ]

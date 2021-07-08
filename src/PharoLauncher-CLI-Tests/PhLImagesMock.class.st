@@ -38,8 +38,13 @@ PhLImagesMock >> checkImageArchitecture [
 ]
 
 { #category : #printing }
-PhLImagesMock >> cliPrintString [
-	^ self name,'    architecture: ', self architecture.
+PhLImagesMock >> cliPrintOn: aStream [
+	aStream
+		nextPutAll: self name;
+		tab;
+		nextPutAll: 'architecture: ';
+		nextPutAll: self architecture;
+		newLine
 ]
 
 { #category : #accessing }
