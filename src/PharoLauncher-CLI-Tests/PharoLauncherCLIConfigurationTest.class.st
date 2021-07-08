@@ -72,7 +72,6 @@ PharoLauncherCLIConfigurationTest >> testGetConfigurationWhenConfigurationFileAb
 	
 	| config |
 	config := PharoLauncherCLIConfiguration configurationFromFile: (root / 'launcherSettings.ston') asFileReference .
-	
 	self assert: (config isKindOf: PharoLauncherCLIConfiguration).
 	self assert: ( PhLNotificationCenter default errorStream contents includesSubstring: 'Config' ) 
 	
