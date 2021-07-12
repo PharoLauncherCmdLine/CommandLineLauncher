@@ -28,13 +28,16 @@ PhLImageCreateLaunchScriptCliCommand class >> launcherCmdPositionals [
 
 { #category : #creating }
 PhLImageCreateLaunchScriptCliCommand >> createLaunchScript: anImage [
-	| imagePath |
+	| imagePath script |
 	imagePath := anImage location asPath.
-	(imagePath parent / (anImage name , '.sh')) asFileReference
+	script := (imagePath parent / (anImage name , '.sh')) asFileReference.
+	script
 		writeStreamDo: [ :stream | 
 			stream
 				nextPutAll: './pharo-launcher image launch ';
-				nextPutAll: anImage location ]
+				nextPutAll: anImage location;
+				lf ].
+	LibC runCommand: 'chmod +x ',script fullName
 ]
 
 { #category : #accessing }
