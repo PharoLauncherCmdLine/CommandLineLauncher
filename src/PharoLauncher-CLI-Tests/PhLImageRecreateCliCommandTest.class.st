@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 PhLImageRecreateCliCommandTest >> setUp [
 	super setUp.
-	self launcherModel templateRepository: PhLTemplateGroupTestRepository new.
+	self launcherModel templateRepository: PhLTemplateTestRepository new.
 	self launcherModel imageRepository: PhLTestImageRepository new.
 
 ]
