@@ -14,17 +14,16 @@ PhLImageRecreateCliCommandTest >> setUp [
 
 { #category : #tests }
 PhLImageRecreateCliCommandTest >> testCanRecreateAnImageShouldSucceed [
-	| image imageFile command |
-	command := PhLImageRecreateCliCommand with: context.
+	| image imageFile |
 	imageFile := self imageRepository createImageNamed: 'myImage'.
 	image := PhLImage location: imageFile.
 	image originTemplate: (self templateRepository createLocalTemplateNamed: 'Foo test template').
 		
 	DiskStore
-		currentFileSystem: self imageRepository baseDirectory  
+		currentFileSystem: self imageRepository baseDirectory fileSystem
 		during: [
 			self deny: imageFile contents equals: 'foo'.
-			command executeWithImage: image.
+			self runCommand: #('launcher' 'image' 'recreate' 'myImage').
 			
 			self assert: imageFile exists.
 			self assert: imageFile contents equals: 'foo'].
