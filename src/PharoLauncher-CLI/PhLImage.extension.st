@@ -6,6 +6,5 @@ PhLImage >> cliPrintOn: anOutputStream [
 		nextPutAll: self name;
 		tab;
 		nextPutAll: 'architecture: ';
-		nextPutAll: self architecture;
-		newLine.
+		nextPutAll: self architecture.
 ]

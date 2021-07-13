@@ -19,8 +19,7 @@ PhLVirtualMachinesMock class >> id: aString [
 
 { #category : #instance }
 PhLVirtualMachinesMock >> cliPrintOn: aStream [
-	aStream nextPutAll: self id;
-	newLine.
+	aStream nextPutAll: self id
 ]
 
 { #category : #printing }

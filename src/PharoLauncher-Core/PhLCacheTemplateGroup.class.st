@@ -24,9 +24,7 @@ PhLCacheTemplateGroup class >> group: aTemplateGroup [
 
 { #category : #printing }
 PhLCacheTemplateGroup >> cliPrintOn: aStream [
-	aStream
-		nextPutAll: self name;
-		newLine
+	aStream nextPutAll: self name
 ]
 
 { #category : #comparing }

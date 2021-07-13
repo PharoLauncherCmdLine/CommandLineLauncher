@@ -42,8 +42,7 @@ PhLImagesMock >> cliPrintOn: aStream [
 		nextPutAll: self name;
 		tab;
 		nextPutAll: 'architecture: ';
-		nextPutAll: self architecture;
-		newLine
+		nextPutAll: self architecture.
 ]
 
 { #category : #accessing }
