@@ -9,8 +9,7 @@ Class {
 		'name',
 		'isLaunched',
 		'script',
-		'location',
-		'isModified'
+		'location'
 	],
 	#category : #'PharoLauncher-CLI-Tests'
 }
@@ -76,22 +75,11 @@ PhLImagesMock >> initializationScript: aFileReference [
 PhLImagesMock >> initialize [ 
 	super initialize.
 	isLaunched := false.
-	isModified := false 
 ]
 
 { #category : #mock }
 PhLImagesMock >> isLaunched [
 	^ isLaunched
-]
-
-{ #category : #setter }
-PhLImagesMock >> isModified [
-	^ isModified
-]
-
-{ #category : #setter }
-PhLImagesMock >> isModified: aBoolean [
-	isModified := aBoolean
 ]
 
 { #category : #accessing }

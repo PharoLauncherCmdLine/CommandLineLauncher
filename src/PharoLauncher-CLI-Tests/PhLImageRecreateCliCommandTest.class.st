@@ -4,50 +4,29 @@ Class {
 	#category : #'PharoLauncher-CLI-Tests'
 }
 
-{ #category : #tests }
-PhLImageRecreateCliCommandTest >> templateZipFile [
-	| archive zipFile |
-	archive := ZipArchive new.
-	archive addDeflateString: 'foo' as: 'bar.image'.
-	archive addDeflateString: 'foo' as: 'bar.changes'.
-	
-	zipFile := FileSystem memory root / 'template.zip'.
-	zipFile binaryWriteStreamDo: [ :stream | archive writeTo: stream ].
-	^ zipFile
+{ #category : #running }
+PhLImageRecreateCliCommandTest >> setUp [
+	super setUp.
+	self launcherModel templateRepository: PhLTemplateGroupTestRepository new.
+	self launcherModel imageRepository: PhLTestImageRepository new.
+
 ]
 
 { #category : #tests }
-PhLImageRecreateCliCommandTest >> testCanRecreateAnImage2 [
-	| image imageTestRepository imageFile command memoryFileSystem |
+PhLImageRecreateCliCommandTest >> testCanRecreateAnImageShouldSucceed [
+	| image imageFile command |
 	command := PhLImageRecreateCliCommand with: context.
-	memoryFileSystem := FileSystem memory.
-	imageTestRepository := PhLTestImageRepository new.
-
-	imageFile := imageTestRepository createImageNamed: 'myImage' in: memoryFileSystem root / 'myImage'.
+	imageFile := self imageRepository createImageNamed: 'myImage'.
 	image := PhLImage location: imageFile.
-	image originTemplate:(PhLLocalTemplate name: 'Foo test template' zipFile: self templateZipFile).
-	
-	self launcherModel imageRepository: (PhLDirectoryBasedImageRepository forDirectory: memoryFileSystem root).
-	
+	image originTemplate: (self templateRepository createLocalTemplateNamed: 'Foo test template').
+		
 	DiskStore
-		currentFileSystem: memoryFileSystem 
-		during: [ 
+		currentFileSystem: self imageRepository baseDirectory  
+		during: [
+			self deny: imageFile contents equals: 'foo'.
 			command executeWithImage: image.
+			
 			self assert: imageFile exists.
 			self assert: imageFile contents equals: 'foo'].
-
-]
-
-{ #category : #tests }
-PhLImageRecreateCliCommandTest >> testRecreateAnImage [
-	| image |
-	self addImageNamed: 'myNewImage'.
-	image := self imageRepository images detect: [ :each | each name = 'myNewImage' ].
-	image isModified: true. 
-	
-	self runCommand: {'launcher'. 'image'.'recreate'. 'myNewImage'}.
-	
-	self assertSuccess. 
-	self deny: (image isModified ).
 
 ]
