@@ -35,7 +35,8 @@ PhLDownloadManager class >> setDefault: aDownloadManager [
 PhLDownloadManager >> basicDownload: url toFile: destinationFile [
 	| tmpFile |
 	tmpFile := destinationFile , UUIDGenerator  next asString.
-	PhLDownloadManagerBothUiAndNonUI new"self" displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ].
+	UIManager default isInteractiveUI  ifTrue: [ self displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ]. ].
+	UIManager default isInteractiveUI ifFalse: [ PhLDownloadManagerBothUiAndNonUI new displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ]. ].
 	destinationFile ensureDelete. 
 	tmpFile renameTo: destinationFile basename.
 ]
