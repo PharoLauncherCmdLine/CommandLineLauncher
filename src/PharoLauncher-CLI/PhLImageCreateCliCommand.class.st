@@ -100,6 +100,17 @@ PhLImageCreateCliCommand >> imageName [
 	^ (arguments at: #newImageName) word
 ]
 
+{ #category : #'ui requests' }
+PhLImageCreateCliCommand >> informUserDuring: aBlock [
+	| test |
+	test := Job block: aBlock.
+	test title: 'dowload progress';
+		min: 0;
+		max: 10.
+	self outStream
+	
+]
+
 { #category : #message }
 PhLImageCreateCliCommand >> logCannotFindTemplate [
 	self errorStream
@@ -130,9 +141,9 @@ PhLImageCreateCliCommand >> officialTemplateRepository [
 
 { #category : #querying }
 PhLImageCreateCliCommand >> template [
-	^ self templateRepository
+	PhLDownloadManagerBothUiAndNonUI new displayProgressDuring: [^ self templateRepository
 		templateNamed: self templateName
-		inCategoryNamed: self templateCategory
+		inCategoryNamed: self templateCategory]
 ]
 
 { #category : #accessing }

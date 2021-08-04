@@ -35,7 +35,7 @@ PhLDownloadManager class >> setDefault: aDownloadManager [
 PhLDownloadManager >> basicDownload: url toFile: destinationFile [
 	| tmpFile |
 	tmpFile := destinationFile , UUIDGenerator  next asString.
-	self displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ].
+	PhLDownloadManagerBothUiAndNonUI new"self" displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ].
 	destinationFile ensureDelete. 
 	tmpFile renameTo: destinationFile basename.
 ]
@@ -50,7 +50,7 @@ PhLDownloadManager >> displayProgressDuring: workBlock [
 				on: HTTPProgress
 				do: [ :progress | 
 					bar label: progress printString.
-					progress isEmpty
+					progress isEmpty   
 						ifFalse: [ bar current: progress percentage ].
 					progress resume ] ]
 ]
