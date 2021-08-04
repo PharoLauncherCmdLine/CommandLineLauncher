@@ -12,10 +12,13 @@ PhLDownloadManagerBothUiAndNonUI >> displayProgressDuring: workBlock [
 		on: HTTPProgress
 		do: [ :progress | 
 			progress percentage
-				ifNotNil: [ ( progress percentage // 10 > progressionFrom0To10 )
+				ifNotNil: [ progress percentage // 10 > progressionFrom0To10
 						ifTrue: [ progressionFrom0To10 := progressionFrom0To10 + 1.
 							self nonUIProgressBar: progressionFrom0To10 ] ].
-			progress resume ]
+			progress resume ].
+	PhLNotificationCenter default outStream
+		nextPutAll: 'download complete';
+		nextPutAll: OSPlatform current lineEnding
 ]
 
 { #category : #'as yet unclassified' }
@@ -24,6 +27,7 @@ PhLDownloadManagerBothUiAndNonUI >> nonUIProgressBar: aNumber [
 	aNumber timesRepeat: [ PhLNotificationCenter default outStream nextPutAll: '#'. ].
 	(10 - aNumber) timesRepeat: [ PhLNotificationCenter default outStream nextPutAll: ' '. ].
 	PhLNotificationCenter default outStream nextPutAll: ']'.
+   PhLNotificationCenter default outStream nextPutAll: ' ', aNumber asString,'0 %'.
 	PhLNotificationCenter default outStream nextPutAll: OSPlatform current lineEnding 
 	
 	
