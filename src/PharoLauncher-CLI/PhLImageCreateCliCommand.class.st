@@ -77,11 +77,13 @@ PhLImageCreateCliCommand class >> launcherCmdPositionals [
 { #category : #accessing }
 PhLImageCreateCliCommand >> createImage: aTemplateName to: newImageName [
 	self logCreationOfImageFrom: aTemplateName.
-	[ ^ [ self imageRepository
-		extractTemplate: self template
-		to: newImageName ]
+	[ ^ [ self imageRepository extractTemplate: self template to: newImageName ]
 		on: NotFound
-		do: [ self logCannotFindTemplate ]] on: PhLNameNotAvailableError do: [ ^ self outStream nextPutAll: 'Name for the new image is not available, please change it'; newLine ]
+		do: [ self logCannotFindTemplate ] ]
+		on: PhLNameNotAvailableError
+		do: [ ^ self outStream
+				nextPutAll: 'Name for the new image is not available, please change it';
+				newLine ]
 ]
 
 { #category : #default }
@@ -98,17 +100,6 @@ PhLImageCreateCliCommand >> execute [
 { #category : #accessing }
 PhLImageCreateCliCommand >> imageName [
 	^ (arguments at: #newImageName) word
-]
-
-{ #category : #'ui requests' }
-PhLImageCreateCliCommand >> informUserDuring: aBlock [
-	| test |
-	test := Job block: aBlock.
-	test title: 'dowload progress';
-		min: 0;
-		max: 10.
-	self outStream
-	
 ]
 
 { #category : #message }
@@ -141,9 +132,9 @@ PhLImageCreateCliCommand >> officialTemplateRepository [
 
 { #category : #querying }
 PhLImageCreateCliCommand >> template [
-	PhLDownloadManagerBothUiAndNonUI new displayProgressDuring: [^ self templateRepository
+	^ self templateRepository
 		templateNamed: self templateName
-		inCategoryNamed: self templateCategory]
+		inCategoryNamed: self templateCategory
 ]
 
 { #category : #accessing }

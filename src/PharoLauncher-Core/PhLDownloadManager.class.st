@@ -35,8 +35,7 @@ PhLDownloadManager class >> setDefault: aDownloadManager [
 PhLDownloadManager >> basicDownload: url toFile: destinationFile [
 	| tmpFile |
 	tmpFile := destinationFile , UUIDGenerator  next asString.
-	UIManager default isInteractiveUI  ifTrue: [ self displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ]. ].
-	UIManager default isInteractiveUI ifFalse: [ PhLDownloadManagerBothUiAndNonUI new displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ]. ].
+	self displayProgressDuring: [ (self newHTTPClientForUrl: url) downloadTo: tmpFile ].
 	destinationFile ensureDelete. 
 	tmpFile renameTo: destinationFile basename.
 ]
@@ -44,15 +43,18 @@ PhLDownloadManager >> basicDownload: url toFile: destinationFile [
 { #category : #private }
 PhLDownloadManager >> displayProgressDuring: workBlock [
 	"Inform user about download progression"
+	| bar |
+	bar := ConsoleProgressBar on: PhLNotificationCenter default outStream.
 
 	UIManager default
-		informUserDuring: [ :bar | 
+		informUserDuring: [ :job | 
 			workBlock
 				on: HTTPProgress
 				do: [ :progress | 
-					bar label: progress printString.
-					progress isEmpty   
-						ifFalse: [ bar current: progress percentage ].
+					job label: progress printString.
+					progress isEmpty
+						ifFalse: [ job current: progress percentage.
+									bar updateJob: progress ].
 					progress resume ] ]
 ]
 
