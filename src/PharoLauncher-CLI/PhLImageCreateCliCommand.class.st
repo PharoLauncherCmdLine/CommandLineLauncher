@@ -81,14 +81,6 @@ PhLImageCreateCliCommand class >> launcherCmdSubcommands [
 	^ #()
 ]
 
-{ #category : #'command execution' }
-PhLImageCreateCliCommand >> createImage: newImageName from: template [
-	^ self imageRepository
-		extractTemplate: template
-		to: newImageName 
-		
-]
-
 { #category : #accessing }
 PhLImageCreateCliCommand >> createImage: aTemplateName to: newImageName [
 	self logCreationOfImageFrom: aTemplateName.
@@ -99,6 +91,14 @@ PhLImageCreateCliCommand >> createImage: aTemplateName to: newImageName [
 		do: [ ^ self outStream
 				nextPutAll: 'Name for the new image is not available, please change it';
 				newLine ]
+]
+
+{ #category : #'command execution' }
+PhLImageCreateCliCommand >> createImage: newImageName from: template [
+	^ self imageRepository
+		extractTemplate: template
+		to: newImageName 
+		
 ]
 
 { #category : #default }
