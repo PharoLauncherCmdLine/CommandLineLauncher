@@ -65,7 +65,7 @@ PhLImageKillCliCommand >> killImageCmdStringFrom: anImageName [
 				ifFalse: [ aStream
 						nextPutAll: ' | grep ';
 						nextPutAll: anImageName ].
-			aStream nextPutAll: ' | tr -s '' '' | cut -d '' '' -f1)> dev/null' ]
+			aStream nextPutAll: ' | tr -s '' '' | cut -d '' '' -f1)> /dev/null' ]
 ]
 
 { #category : #commands }
