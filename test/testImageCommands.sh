@@ -1,80 +1,87 @@
 #!/usr/bin/env bash
 
-./ensureShunitIsPresent.sh
+# import functions that are shared across unit tests
+source PharoLauncherCommonFunctions.sh
 
-#setup pharo launcher and image name paths
-PHLSCRIPT=./pharo-launcher.sh
-IMAGE=./shared/PharoLauncher.image
+#ensure that Shell unit test library is installed
+ensureShunitIsPresent
 
-# setup commands for image manipulation
-processListCommand="runLauncherScript image processList"
-launchCommand="runLauncherScript image launch PhLTestImage"
-killAllCommand="runLauncherScript image kill --all"
-killCommand="runLauncherScript image kill PhLTestImage"
+#setup sample image name and template name
+SAMPLEIMAGE="PhLTestImage"
+SAMPLETEMPLATE="Pharo 8.0 - 64bit (old stable)"
+
+# setup commands for sample image manipulation
+createSampleImageCommand () {
+    runLauncherScript image create $SAMPLEIMAGE "`$SAMPLETEMPLATE`"
+}
+
+launchSampleImageCommand () {
+    runLauncherScript image launch $SAMPLEIMAGE
+}
+
+killSampleImageCommand () {
+    runLauncherScript image kill $SAMPLEIMAGE
+}
+
+deleteSampleImageCommand () { 
+    runLauncherScript image delete $SAMPLEIMAGE
+}
+
+processListCommand () {
+    runLauncherScript image processList
+}
+
+killAllCommand () {
+    runLauncherScript image kill --all
+}
+
+
 
 oneTimeSetUp() {
-	./createSampleImageCmd.sh
 	prepareLauncherScriptAndImage
-}
-
-runLauncherScript() {
-	pushd ..
-	$PHLSCRIPT $@
-	popd
-}
-
-prepareLauncherScriptAndImage () {
-	# ensure that launcher script and image is in needed directories for test evaluation (before packaging)
-	pushd ..
-	if [ ! -f "$PHLSCRIPT" ] ; then
-	    cp ./script/pharo-launcher.sh $PHLSCRIPT
-	fi
-	if [ ! -f "$IMAGE" ] ; then
-		mkdir -p shared
-	    cp PharoLauncher.image $IMAGE
-	fi
-	popd
-}
-
-cleanupLauncherScriptAndImage () {
-	pushd ..
-	rm -rf ./shared
-	rm -f $PHLSCRIPT
-	popd
+	createSampleImageCommand
 }
 
 testLauncherProcessListCommandWhenNoPharoImageRunningShouldReturnEmptyList(){
-	result=$($processListCommand)
-	assertNull "$result"
+	result=$(processListCommand)
+	#since VM prints some warnings, we need to check presence of image name from process list
+	assertNotContains "$result" "$SAMPLEIMAGE"
 }
 
 testLauncherProcessListCommandWhenImageIsLaunchedShouldReturnOneImage(){
-	$launchCommand >/dev/null
-	result=$($processListCommand)
-	kill $(pgrep -l -f PhLTestImage.image |  cut -d ' ' -f1) >/dev/null
-    assertNotNull "$result"
+    launchSampleImageCommand> /dev/null
+    result=$(processListCommand)
+    kill $(pgrep -l -f $SAMPLEIMAGE.image |  cut -d ' ' -f1) >/dev/null
+    assertContains "$result" "$SAMPLEIMAGE"
+	
 }
 
 testLauncherKillAllCommandWithOneImageLaunchedShouldKillAll(){
-	$launchCommand >/dev/null
-	result=$($processListCommand)
-	assertNotNull "$result"
-	$killAllCommand
-	result=$($processListCommand)
-	assertNull "$result"
+	launchSampleImageCommand> /dev/null
+	result=$(processListCommand)
+	echo "actual: $result"
+    echo "expected (should contain): $SAMPLEIMAGE"
+	assertContains "$result" "$SAMPLEIMAGE"
+	killAllCommand
+	result=$(processListCommand)
+	assertNotContains "$result" "$SAMPLEIMAGE"
+	echo "Actual: $result"
+    echo "Not expected (should not contain): $SAMPLEIMAGE"
+	assertNotContains "$result" "$SAMPLEIMAGE"
 }
 
 testLauncherKillCommandWithOneImageLaunchedShouldKillIt(){
-	$launchCommand >/dev/null
-	result=$($processListCommand)
-	assertNotNull "$result"
-	$killCommand
-	result=$($processListCommand)
-	assertNull "$result"
+	launchSampleImageCommand> /dev/null
+	result=$(processListCommand)
+	assertContains "$result" "$SAMPLEIMAGE"
+	killSampleImageCommand
+	result=$(processListCommand)
+	assertNotContains "$result" "$SAMPLEIMAGE"
 }
 
 oneTimeTearDown() {
-	./deleteSampleImageCmd.sh
+	echo "Calling teardown..."
+	deleteSampleImageCommand
 	cleanupLauncherScriptAndImage
 }
 
