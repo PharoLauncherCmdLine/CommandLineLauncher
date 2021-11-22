@@ -7,24 +7,24 @@ source PharoLauncherCommonFunctions.sh
 ensureShunitIsPresent
 
 #setup sample image name and template name
-SAMPLEIMAGE="PhLTestImage"
-SAMPLETEMPLATE="Pharo 8.0 - 64bit (old stable)"
+SAMPLE_IMAGE="PhLTestImage"
+SAMPLE_TEMPLATE="Pharo 8.0 - 64bit (old stable)"
 
 # setup commands for sample image manipulation
 createSampleImageCommand () {
-    runLauncherScript image create $SAMPLEIMAGE "`$SAMPLETEMPLATE`"
+    runLauncherScript image create $SAMPLE_IMAGE "`$SAMPLE_TEMPLATE`"
 }
 
 launchSampleImageCommand () {
-    runLauncherScript image launch $SAMPLEIMAGE
+    runLauncherScript image launch $SAMPLE_IMAGE
 }
 
 killSampleImageCommand () {
-    runLauncherScript image kill $SAMPLEIMAGE
+    runLauncherScript image kill $SAMPLE_IMAGE
 }
 
 deleteSampleImageCommand () { 
-    runLauncherScript image delete $SAMPLEIMAGE
+    runLauncherScript image delete $SAMPLE_IMAGE
 }
 
 processListCommand () {
@@ -45,38 +45,33 @@ oneTimeSetUp() {
 testLauncherProcessListCommandWhenNoPharoImageRunningShouldReturnEmptyList(){
 	result=$(processListCommand)
 	#since VM prints some warnings, we need to check presence of image name from process list
-	assertNotContains "$result" "$SAMPLEIMAGE"
+	assertNotContains "$result" "$SAMPLE_IMAGE"
 }
 
 testLauncherProcessListCommandWhenImageIsLaunchedShouldReturnOneImage(){
     launchSampleImageCommand> /dev/null
     result=$(processListCommand)
-    kill $(pgrep -l -f $SAMPLEIMAGE.image |  cut -d ' ' -f1) >/dev/null
-    assertContains "$result" "$SAMPLEIMAGE"
+    kill $(pgrep -l -f $SAMPLE_IMAGE.image |  cut -d ' ' -f1) >/dev/null
+    assertContains "$result" "$SAMPLE_IMAGE"
 	
 }
 
 testLauncherKillAllCommandWithOneImageLaunchedShouldKillAll(){
 	launchSampleImageCommand> /dev/null
 	result=$(processListCommand)
-	echo "actual: $result"
-    echo "expected (should contain): $SAMPLEIMAGE"
-	assertContains "$result" "$SAMPLEIMAGE"
+	assertContains "$result" "$SAMPLE_IMAGE"
 	killAllCommand
 	result=$(processListCommand)
-	assertNotContains "$result" "$SAMPLEIMAGE"
-	echo "Actual: $result"
-    echo "Not expected (should not contain): $SAMPLEIMAGE"
-	assertNotContains "$result" "$SAMPLEIMAGE"
+	assertNotContains "$result" "$SAMPLE_IMAGE"
 }
 
 testLauncherKillCommandWithOneImageLaunchedShouldKillIt(){
 	launchSampleImageCommand> /dev/null
 	result=$(processListCommand)
-	assertContains "$result" "$SAMPLEIMAGE"
+	assertContains "$result" "$SAMPLE_IMAGE"
 	killSampleImageCommand
 	result=$(processListCommand)
-	assertNotContains "$result" "$SAMPLEIMAGE"
+	assertNotContains "$result" "$SAMPLE_IMAGE"
 }
 
 oneTimeTearDown() {
