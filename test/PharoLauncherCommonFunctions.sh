@@ -45,3 +45,11 @@ runLauncherScript() {
 	$PHLSCRIPT $@
 	popd> /dev/null
 }
+
+assertContainsPrinted() {
+    assertContains "Actual: \"$1\", expected: \"$2\". " "$1" "$2"
+}
+
+assertNotContainsPrinted() {
+    assertNotContains "Actual: \"$1\", NOT expected: \"$2\". " "$1" "$2"
+}
