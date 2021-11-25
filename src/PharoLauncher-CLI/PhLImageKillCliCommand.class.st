@@ -52,7 +52,7 @@ PhLImageKillCliCommand >> execute [
 { #category : #commands }
 PhLImageKillCliCommand >> killAllImages [
 	
-	^ LibC runCommand: (self killImageCmdStringFrom: nil)
+	^ self executeOSShellCommand: (self killImageCmdStringFrom: nil)
 ]
 
 { #category : #commands }
@@ -71,5 +71,5 @@ PhLImageKillCliCommand >> killImageCmdStringFrom: anImageName [
 { #category : #commands }
 PhLImageKillCliCommand >> killSelectedImage [
 
-	^ LibC runCommand: (self killImageCmdStringFrom: self imageName)
+	^ self executeOSShellCommand: (self killImageCmdStringFrom: self imageName)
 ]

@@ -19,14 +19,11 @@ PhLImageProcessListCliCommand class >> launcherCmdDescription [
 
 { #category : #'command execution' }
 PhLImageProcessListCliCommand >> execute [
-	"The brackets between the P of Pharo is to avoid to list the get procress when using ps x."
-	"The grep -v ps is to avoid to list the pharo launcher image."
 	
-	"TODO rewrite use to OSSubProcess since execution can check exit code and result of bash command at once, libc can do just one or another"
 	"TODO rewrite this to more meaningful output with columns like PID, datetime started, vm name, image name"
 	
 	self outStream 
-		nextPutAll: (LibC resultOfCommand: self processListCmdString).
+		nextPutAll: (self executeOSShellCommand: self processListCmdString).
 	^ self context exitSuccess 
 ]
 
