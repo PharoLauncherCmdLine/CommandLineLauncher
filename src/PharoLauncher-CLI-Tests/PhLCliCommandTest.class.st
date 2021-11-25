@@ -37,3 +37,11 @@ PhLCliCommandTest >> outputString [
 PhLCliCommandTest >> runCommand: args [
 	^ (context arguments: args) execute.
 ]
+
+{ #category : #test }
+PhLCliCommandTest >> testExecuteOSShellCommand [
+	|aCmd|
+	aCmd := PhLCliCommand new. 
+	self deny: (aCmd executeOSShellCommand: 'ls') isEmptyOrNil.
+	self should: [aCmd executeOSShellCommand: 'bleh' ] raise: PhLProcessCommandError description: 'Invoking invalid OS shell command should end up with domain error exception: PHLProcessCommandError'.
+]

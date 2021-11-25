@@ -117,6 +117,16 @@ PhLCliCommand >> execute [
 	^ self context exitSuccess
 ]
 
+{ #category : #'command execution' }
+PhLCliCommand >> executeOSShellCommand: cmdString [
+
+ ^ PhLProcessWrapper new 
+		shellCommand;
+		addArguments: cmdString;
+		runAndWaitWithStdOutput
+	
+]
+
 { #category : #querying }
 PhLCliCommand >> findLatestPharoStableVersionIn: aLocation [
 	^ (aLocation

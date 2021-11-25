@@ -45,16 +45,6 @@ PhLImageCliCommand >> execute [
 		do: [ ^ self logImageNotFoundMessage ]
 ]
 
-{ #category : #'command execution' }
-PhLImageCliCommand >> executeOSShellCommand: cmdString [
-
- ^ PhLProcessWrapper new 
-		shellCommand;
-		addArguments: cmdString;
-		runAndWaitWithStdOutput
-	
-]
-
 { #category : #'find-select' }
 PhLImageCliCommand >> findByPath: anImageName [
 	(anImageName asFileReference exists
