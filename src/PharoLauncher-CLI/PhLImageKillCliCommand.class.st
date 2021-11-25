@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'allFlag'
 	],
-	#category : #'PharoLauncher-CLI'
+	#category : #'PharoLauncher-CLI-Commands'
 }
 
 { #category : #'command line' }

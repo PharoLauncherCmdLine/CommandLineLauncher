@@ -13,7 +13,7 @@ I execute:
 Class {
 	#name : #PhLImageCliCommand,
 	#superclass : #PhLCliCommand,
-	#category : #'PharoLauncher-CLI'
+	#category : #'PharoLauncher-CLI-Commands'
 }
 
 { #category : #'command line' }
@@ -43,6 +43,16 @@ PhLImageCliCommand >> execute [
 	[ self executeWithImage: self findImage ]
 		on: NotFound
 		do: [ ^ self logImageNotFoundMessage ]
+]
+
+{ #category : #'command execution' }
+PhLImageCliCommand >> executeOSShellCommand: cmdString [
+
+ ^ PhLProcessWrapper new 
+		shellCommand;
+		addArguments: cmdString;
+		runAndWaitWithStdOutput
+	
 ]
 
 { #category : #'find-select' }

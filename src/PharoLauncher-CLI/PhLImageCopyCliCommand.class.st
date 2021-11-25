@@ -15,7 +15,7 @@ Example of utilisation with imageToCopy and copiedImageName:
 Class {
 	#name : #PhLImageCopyCliCommand,
 	#superclass : #PhLImageCliCommand,
-	#category : #'PharoLauncher-CLI'
+	#category : #'PharoLauncher-CLI-Commands'
 }
 
 { #category : #'command line' }

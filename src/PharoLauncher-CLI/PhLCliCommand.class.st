@@ -18,7 +18,7 @@ Class {
 		'pharoLauncherModel',
 		'errorStream'
 	],
-	#category : #'PharoLauncher-CLI'
+	#category : #'PharoLauncher-CLI-Commands'
 }
 
 { #category : #'command line - converting' }
