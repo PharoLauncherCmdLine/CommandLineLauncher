@@ -18,7 +18,7 @@ PhLProcessWrapperTest >> testRunAndWaitWithStdOutput [
 	[ (self setupProcessCmdWith: 'something') runAndWaitWithStdOutput ]
 		on: PhLProcessCommandError
 		do: [ :ex | 
-			self assert: (ex description includesSubstring: 'OS process command exit with:').
+			self assert: (ex description includesSubstring: 'OS process command:').
 			self assert: (ex description includesSubstring: 'Stderr contents:').
 			self assert: (ex description includesSubstring: 'something') ]
 ]
