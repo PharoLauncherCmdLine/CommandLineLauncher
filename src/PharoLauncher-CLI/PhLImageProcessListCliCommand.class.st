@@ -32,8 +32,7 @@ PhLImageProcessListCliCommand >> processListCmdString [
 
 	^ String streamContents: [ :aStream |		
 		aStream 
-			nextPutAll: 'bash -c "pgrep -a -f Pharo | grep ''.image'' | grep -v ''.bash''| grep -v ';
-			nextPutAll: self currentVMPid asString;
-			nextPutAll: '"'
+			nextPutAll: 'pgrep -a -f Pharo | grep ''.image'' | grep -v ''.bash''| grep -v ';
+			nextPutAll: self currentVMPid asString.
 	]
 ]
