@@ -23,17 +23,13 @@ PhLImageProcessListCliCommand >> execute [
 	"TODO rewrite this to more meaningful output with columns like PID, datetime started, vm name, image name"
 	
 	self outStream 
-		nextPutAll: (self executeOSShellCommand: self processListCmdString).
+		nextPutAll: self executeOSShellCommand.
 	^ self context exitSuccess 
 ]
 
 { #category : #'command execution' }
-PhLImageProcessListCliCommand >> processListCmdString [
+PhLImageProcessListCliCommand >> osShellArgArray [ 
 
-	^ String streamContents: [ :aStream |		
-		aStream 
-			nextPutAll: 'echo -n $(pgrep -a -f Pharo | grep ''.image'' | grep -v ''.bash''| grep -v ';
-			nextPutAll: self currentVMPid asString;
-			nextPutAll: ')'.
-	]
+	^ Array with: 'echo' with: '-n' with: ('$(pgrep -a -f Pharo | grep ''.image'' | grep -v ''.bash''| grep -v {1})' format: {self currentVMPid asString})
+
 ]

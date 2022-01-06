@@ -118,13 +118,18 @@ PhLCliCommand >> execute [
 ]
 
 { #category : #'command execution' }
-PhLCliCommand >> executeOSShellCommand: cmdString [
+PhLCliCommand >> executeOSShellCommand [
 
- ^ PhLProcessWrapper new 
+	^ self executeOSShellCommandWithArgs: self osShellArgArray
+]
+
+{ #category : #'command execution' }
+PhLCliCommand >> executeOSShellCommandWithArgs: argArray [
+
+^ PhLProcessWrapper new 
 		shellCommand;
-		addArguments: cmdString;
+		addAllArguments: argArray;
 		runAndWaitWithStdOutput
-	
 ]
 
 { #category : #querying }
@@ -163,6 +168,12 @@ PhLCliCommand >> messageErrorCategoryNotFound [
 	self errorStream nextPutAll: 'please enter a correct category '.
 	self errorStream newLine.
 	^ self
+]
+
+{ #category : #'command execution' }
+PhLCliCommand >> osShellArgArray [
+	"No OS shell arguments by default, using array instead of string"
+	^ #()
 ]
 
 { #category : #'private ' }

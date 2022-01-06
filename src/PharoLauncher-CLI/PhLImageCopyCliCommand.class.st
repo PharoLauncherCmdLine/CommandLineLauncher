@@ -58,5 +58,5 @@ PhLImageCopyCliCommand >> executeWithImage: anImage [
 
 { #category : #accessing }
 PhLImageCopyCliCommand >> targetName [
-	^ (arguments at: #newImageName) word
+	^ (arguments at: #newImageName) value
 ]

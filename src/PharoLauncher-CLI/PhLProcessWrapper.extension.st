@@ -1,6 +1,13 @@
 Extension { #name : #PhLProcessWrapper }
 
 { #category : #'*PharoLauncher-CLI' }
+PhLProcessWrapper >> addAllArguments: argsArray [
+	
+	"supplemental method for adding args from array and not just a string"
+	argsArray do: [:arg | self addArgument: arg ]
+]
+
+{ #category : #'*PharoLauncher-CLI' }
 PhLProcessWrapper >> getExceptionMessageFor: cmdString status: statusMsg stdError: errorString [
 
 	^ String streamContents: [:aStream | 
@@ -18,16 +25,6 @@ PhLProcessWrapper >> runAndWaitWithStdOutput [
 	"
 
 	self prepareProcess.
-	process
-		redirectStdout;
-		redirectStderr;
-		runAndWaitOnExitDo: [ :termProcess :outString :errString | 
-			termProcess isSuccess
-				ifTrue: [ ^ outString ]
-				ifFalse: [ | exceptionMessage |
-					exceptionMessage := self
-						getExceptionMessageFor: self commandLineString
-						status: termProcess exitStatusInterpreter printString
-						stdError: errString.
-					PhLProcessCommandError signal: exceptionMessage ] ]
+	"return content of stdout, may throw exception that can be handled by sender of this method"
+	^ process runAndWaitWithStdOutput 
 ]
