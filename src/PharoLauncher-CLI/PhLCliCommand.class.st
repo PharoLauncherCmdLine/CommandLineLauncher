@@ -163,6 +163,13 @@ PhLCliCommand >> listAsSton: aCollection [
 	self outStream nextPutAll: (STON toString: aCollection) 
 ]
 
+{ #category : #printing }
+PhLCliCommand >> logExceptionMessage: errMessage [
+
+	self errorStream nextPutAll: errMessage.
+	self errorStream newLine.
+]
+
 { #category : #message }
 PhLCliCommand >> messageErrorCategoryNotFound [
 	self errorStream nextPutAll: 'please enter a correct category '.

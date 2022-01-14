@@ -36,19 +36,20 @@ PhLImageCopyCliCommand class >> launcherCmdPositionals [
 				description: 'Local image name to be copied.';
 					meaning: [ :pos | pos  asString ];
 					implicitMeaning: [ :arg :app |NotFound 
-        signal: 'image to copy argument is missing' . ];
+        signal: 'Image to copy argument is missing.' . ];
 					yourself).
 		((ClapPositional id: #newImageName)
 				description: 'New image name of a copied image.';
 					meaning: [ :pos | pos  asString ];
 					implicitMeaning: [ :arg :app |NotFound 
-        signal: 'new image name argument is missing' .   ];
+        signal: 'New image name argument is missing.' .   ];
 					yourself)	
 	}
 ]
 
 { #category : #'command execution' }
 PhLImageCopyCliCommand >> executeWithImage: anImage [
+
 	[ self imageRepository copyImage: anImage to: self targetName ]
 		on: PhLNameNotAvailableError
 		do: [ ^ self errorStream
@@ -58,5 +59,8 @@ PhLImageCopyCliCommand >> executeWithImage: anImage [
 
 { #category : #accessing }
 PhLImageCopyCliCommand >> targetName [
-	^ (arguments at: #newImageName) value
+
+^ (arguments at: #newImageName)
+		value: self;
+		word
 ]
