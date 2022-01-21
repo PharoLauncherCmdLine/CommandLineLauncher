@@ -30,25 +30,7 @@ PhLImageKillCliCommandTest >> testAllFlag [
 ]
 
 { #category : #test }
-PhLImageKillCliCommandTest >> testOsShellArgArray [
-
-	| killCliCommand  aMatch result|
-	
-	aMatch := (context arguments: #('launcher' 'image' 'kill' 'someImageName')) doMatch.
-	aMatch := (aMatch at: #image) at: #kill.
-	
-	killCliCommand :=  PhLImageKillCliCommand new.
-
-	killCliCommand setArguments: aMatch.
-	result := killCliCommand osShellArgArray.
-	
-	self assert: (result first includesSubstring: 'kill').
-	self assert: (result second includesSubstring: killCliCommand sndKillArgString).
-	
-]
-
-{ #category : #test }
-PhLImageKillCliCommandTest >> testSndKillArgString [
+PhLImageKillCliCommandTest >> testKillArgString [
 
 	| killCliCommand aResult aMatch|
 	
@@ -58,7 +40,7 @@ PhLImageKillCliCommandTest >> testSndKillArgString [
 	killCliCommand setArguments: aMatch.
 	
 		
-	aResult := killCliCommand sndKillArgString.
+	aResult := killCliCommand killArgString.
 	
 	"test if command includes grep of image name"
 	self assert: (aResult includesSubstring: 'grep someImage.image').
@@ -75,10 +57,28 @@ PhLImageKillCliCommandTest >> testSndKillArgString [
 	killCliCommand setArguments: aMatch.
 	
 		
-	aResult := killCliCommand sndKillArgString.
+	aResult := killCliCommand killArgString.
 	"grep of image name shound not be included anymore"
 	self deny: (aResult includesSubstring: 'grep someImage.image').
 
 	"test whether current PID of vm is filtered from list"
 	self assert: (aResult includesSubstring: ('grep -v ', (killCliCommand currentVMPid asString))).
+]
+
+{ #category : #test }
+PhLImageKillCliCommandTest >> testOsShellArgArray [
+
+	| killCliCommand  aMatch result|
+	
+	aMatch := (context arguments: #('launcher' 'image' 'kill' 'someImageName')) doMatch.
+	aMatch := (aMatch at: #image) at: #kill.
+	
+	killCliCommand :=  PhLImageKillCliCommand new.
+
+	killCliCommand setArguments: aMatch.
+	result := killCliCommand osShellArgArray.
+	
+	self assert: (result first includesSubstring: 'kill').
+	self assert: (result second includesSubstring: killCliCommand killArgString).
+	
 ]

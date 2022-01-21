@@ -51,11 +51,24 @@ PhLImageKillCliCommand >> execute [
 
 ]
 
+{ #category : #commands }
+PhLImageKillCliCommand >> killArgString [
+
+	^ String
+		streamContents: [ :aStream | 
+			aStream nextPutAll: '$(pgrep -a -f Pharo | grep -v ';
+			nextPutAll: self currentVMPid asString.
+			self allFlag ifFalse: [ aStream
+						nextPutAll: ' | grep ';
+						nextPutAll:  self imageName ].
+			aStream nextPutAll: ' | tr -s '' '' | cut -d '' '' -f1)>' ]
+]
+
 { #category : #'command execution' }
 PhLImageKillCliCommand >> osShellArgArray [
 
 	"provide list of command and its args in array"
-	^ Array with: 'kill' with: self sndKillArgString with: '/dev/null'
+	^ Array with: 'kill' with: self killArgString with: '/dev/null'
 ]
 
 { #category : #commands }
