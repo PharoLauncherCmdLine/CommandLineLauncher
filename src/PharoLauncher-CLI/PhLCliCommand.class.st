@@ -287,6 +287,13 @@ PhLCliCommand >> logExceptionMessage: errMessage [
 	self errorStream newLine.
 ]
 
+{ #category : #printing }
+PhLCliCommand >> logInfoMessage: errMessage [
+
+	self outStream nextPutAll: errMessage.
+	self outStream newLine
+]
+
 { #category : #'private ' }
 PhLCliCommand >> modelClass [
 
