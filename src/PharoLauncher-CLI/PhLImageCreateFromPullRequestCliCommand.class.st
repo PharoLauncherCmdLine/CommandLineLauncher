@@ -48,18 +48,25 @@ PhLImageCreateFromPullRequestCliCommand class >> missingRepoArgMessage [
 	^ 'An argument is missing. Please specify the Github repository full name in {owner}/{project} format.'
 ]
 
+{ #category : #'command line' }
+PhLImageCreateFromPullRequestCliCommand class >> missingSubfolderArgMessage [
+	
+	^ 'An argument is missing. Please specify the sub-folder with source code.'
+]
+
 { #category : #'command line - arguments' }
 PhLImageCreateFromPullRequestCliCommand class >> repositoryFlag [
 
 	^ (ClapFlag id: #repository)
-			description: 'Github Repository full name (e.g. {owner}/{project}), from which PR will be obtained.';
+			description: 'Github Repository full name (e.g. {owner}/{project}), from which PR will be obtained. By default ''pharo-project/pharo'' is used.';
 			meaning: [ :arg :app | "this argument is optional "
 				(arg at: #repositoryArg) value];
 			implicitMeaning: [ :arg :app | app implicitRepository ];
 			add: ((ClapPositional id: #repositoryArg)
 					description: 'Repository argument in owner/project format.';
 					meaning: [ :pos | pos word asString ];
-					implicitMeaning: [ :arg :app | NotFound signal: self missingRepoArgMessage]).
+					implicitMeaning: [ :arg :app | NotFound signal: self missingRepoArgMessage]);
+			yourself
 ]
 
 { #category : #'command line - arguments' }
@@ -200,7 +207,6 @@ PhLImageCreateFromPullRequestCliCommand >> loadPullRequestCodeToImage: anImage [
 	|imageConfig |
 	imageConfig := self getPullRequestLoadConfigFor: anImage.
 	self logLoadingPullRequestUsing: imageConfig commandString.
-	"anImage launchWithConfiguration: imageConfig."
 	
 	"use handled execution and wait for result"
 	imageConfig launchProcess runAndWaitWithStdOutput.
