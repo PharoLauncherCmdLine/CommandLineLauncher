@@ -72,6 +72,12 @@ PhLImageMock >> checkImageArchitecture [
 	^self 
 ]
 
+{ #category : #mock }
+PhLImagesMock >> defaultArguments [
+
+	^ #()
+]
+
 { #category : #accessing }
 PhLImageMock >> description [ 
 	^ 'this is the description'
